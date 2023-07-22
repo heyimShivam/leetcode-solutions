@@ -20,7 +20,14 @@ public:
     }
 
     double knightProbability(int n, int k, int row, int column) {
-        vector<vector<vector<double>>> dp(n+1, vector<vector<double>>(n+1, vector<double>(k+1, -1)));
+        vector<vector<vector<double>>> dp(
+            n+1, vector<vector<double>>(
+                n+1, vector<double>(
+                    k+1,
+                    -1)
+            )
+        );
+
         return solve(row, column, n, k, dp);
     }
 };
