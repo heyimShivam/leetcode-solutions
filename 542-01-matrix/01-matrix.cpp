@@ -3,9 +3,7 @@ public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
         int n = mat.size();
         int m = mat[0].size();
-       
         queue<pair<pair<int, int>, int>> qu;
-
         vector<vector<int>> vis(n, vector<int>(m, 0));
         vector<vector<int>> result(n, vector<int>(m, 0));
 
