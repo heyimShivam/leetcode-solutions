@@ -37,8 +37,11 @@ public:
                 }
             }
         }
+
         reverse(topo.begin(), topo.end());
+        
         if(topo.size() == numCourses) return topo;
+        
         return {};
     }
 };
