@@ -1,31 +1,29 @@
 class Solution {
-public:
-    double soupServings(int N) {
-        if (N > 4800) {
-            return 1.0;
-        }
-        N = (N + 24) / 25;
-        std::unordered_map<int, double> memo;
-
-        return dp(N, N, memo);
+private:
+    double operation(int a , int b ,  vector<vector<double>> &dp){
+        if(a <= 0 && b <= 0) return 0.5;
+        if(b <= 0) return 0;
+        if(a <= 0) return 1;
+    
+        if(dp[a][b] != -1) return dp[a][b];
+    
+        double ans =0;
+    
+        ans += operation(a-100,b,dp); 
+        ans += operation(a-75,b-25,dp); 
+        ans += operation(a-50,b-50,dp); 
+        ans += operation(a-25,b-75,dp); 
+        
+        return dp[a][b] = ans*0.25;
     }
 
-private:
-    double dp(int a, int b, std::unordered_map<int, double>& memo) {
-        if (a <= 0 && b <= 0) {
-            return 0.5;
-        }
-        if (a <= 0) {
-            return 1.0;
-        }
-        if (b <= 0) {
-            return 0.0;
-        }
-        int key = a * 5000 + b;
-        if (memo.count(key)) {
-            return memo[key];
-        }
-        memo[key] = 0.25 * (dp(a-4, b, memo) + dp(a-3, b-1, memo) + dp(a-2, b-2, memo) + dp(a-1, b-3, memo));
-        return memo[key];
+public:
+    double soupServings(int n) {
+        if(n>10000) return 1;
+
+        vector<vector<double>> dp(n+1,vector<double>(n+1,-1));
+        
+        return operation(n,n,dp);
+
     }
 };
