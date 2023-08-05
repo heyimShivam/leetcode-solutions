@@ -10,7 +10,10 @@ public:
         }
 
         vector<int> dist(n+1, 1e9);
+        
+        // because node is starting from 1 to n;
         dist[0] = 0;
+
         dist[k] = 0;
 
         // first = time;
