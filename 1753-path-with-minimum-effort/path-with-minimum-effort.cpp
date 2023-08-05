@@ -1,44 +1,51 @@
 class Solution {
 public:
-    int minimumEffortPath(vector<vector<int>>& heights) {
-        int n=heights.size();
-        int m=heights[0].size();
-        
-        priority_queue<pair<int,pair<int,int>>,
-        vector<pair<int,pair<int,int>>>,
-        greater<pair<int,pair<int,int>>>>pq;
-        
-        vector<vector<int>>dist(n,vector<int>(m,1e9));
-        
-        dist[0][0]=0;
-        
-        int dr[]={-1,0,1,0};
-        int dc[]={0,1,0,-1};
-        
-        pq.push({0,{0,0}});
+    int minimumEffortPath(vector<vector<int>>& grid) {
+        vector<vector<int>> distance(
+            grid.size(), vector<int>(grid[0].size(), 1e9)
+        );
 
-        while(!pq.empty()){
-            auto it=pq.top();
-            int dis=it.first;
-            int row=it.second.first;
-            int col=it.second.second;
-            pq.pop();
-            
-            if(row==n-1 && col==m-1)return dis;
+        distance[0][0] = 0;
 
-            for(int i=0;i<4;i++){
-                int nr=row+dr[i];
-                int nc=col+dc[i];
-                if(nr>=0 && nr<n && nc>=0 && nc<m){
-                    int neff=max(abs(heights[row][col]-heights[nr][nc]),dis);
-                    if(neff<dist[nr][nc]){
-                        dist[nr][nc]=neff;
-                        pq.push({neff,{nr,nc}});
-                    }
+        queue<pair<int, pair<int, int>>> st;
+
+        // priority_queue<pair<int,pair<int,int>>,
+        // vector<pair<int,pair<int,int>>>,
+        // greater<pair<int,pair<int,int>>>> st;
+
+        st.push({0, {0, 0}});
+
+        while(!st.empty()) {
+            int prevDist = (st.front()).first;
+            int row = (st.front()).second.first;
+            int col = (st.front()).second.second;
+            st.pop();
+
+            int delRow[] = {0, 0, 1, -1};
+            int delCol[] = {1, -1, 0, 0};
+
+            // if(row == grid.size() -1 && col == grid[0].size()-1) return prevDist;
+
+            for(int i = 0; i < 4; i++) {
+                if(row+delRow[i] >= 0 && row+delRow[i] < grid.size() &&
+                   col+delCol[i] >=0 && col+delCol[i] < grid[0].size()) {
+                       int newEfforts = (max(
+                           abs(grid[row][col] - grid[row+delRow[i]][col+delCol[i]]),
+                           prevDist
+                       ));
+
+                       if(newEfforts < distance[row+delRow[i]][col+delCol[i]]) {
+                           distance[row+delRow[i]][col+delCol[i]] = newEfforts;
+
+                           st.push({
+                               newEfforts, {row+delRow[i], col+delCol[i]}
+                           });
+                       }
+
                 }
             }
         }
-
-        return 0;
+ 
+        return distance[grid.size()-1][grid[0].size()-1];
     }
 };
