@@ -7,24 +7,22 @@ public:
 
         distance[0][0] = 0;
 
-        queue<pair<int, pair<int, int>>> st;
-
-        // priority_queue<pair<int,pair<int,int>>,
-        // vector<pair<int,pair<int,int>>>,
-        // greater<pair<int,pair<int,int>>>> st;
+        priority_queue<pair<int,pair<int,int>>,
+        vector<pair<int,pair<int,int>>>,
+        greater<pair<int,pair<int,int>>>> st;
 
         st.push({0, {0, 0}});
 
         while(!st.empty()) {
-            int prevDist = (st.front()).first;
-            int row = (st.front()).second.first;
-            int col = (st.front()).second.second;
+            int prevDist = (st.top()).first;
+            int row = (st.top()).second.first;
+            int col = (st.top()).second.second;
             st.pop();
 
             int delRow[] = {0, 0, 1, -1};
             int delCol[] = {1, -1, 0, 0};
 
-            // if(row == grid.size() -1 && col == grid[0].size()-1) return prevDist;
+            if(row == grid.size() -1 && col == grid[0].size()-1) return prevDist;
 
             for(int i = 0; i < 4; i++) {
                 if(row+delRow[i] >= 0 && row+delRow[i] < grid.size() &&
@@ -46,6 +44,6 @@ public:
             }
         }
  
-        return distance[grid.size()-1][grid[0].size()-1];
+        return 0;
     }
 };
