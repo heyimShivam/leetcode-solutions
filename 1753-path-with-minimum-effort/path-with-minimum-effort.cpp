@@ -22,8 +22,6 @@ public:
             int delRow[] = {0, 0, 1, -1};
             int delCol[] = {1, -1, 0, 0};
 
-            if(row == grid.size() -1 && col == grid[0].size()-1) return prevDist;
-
             for(int i = 0; i < 4; i++) {
                 if(row+delRow[i] >= 0 && row+delRow[i] < grid.size() &&
                    col+delCol[i] >=0 && col+delCol[i] < grid[0].size()) {
@@ -44,6 +42,6 @@ public:
             }
         }
  
-        return 0;
+        return distance[grid.size()-1][grid[0].size()-1];
     }
 };
