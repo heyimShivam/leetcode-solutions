@@ -1,7 +1,19 @@
 class Solution {
 public:
     int searchInsert(vector<int>& nums, int target) {
-        auto lb = lower_bound(nums.begin(), nums.end(), target);
-        return lb - nums.begin();
+        int low = 0, high = nums.size()-1, mid = 0;
+
+        int ans = nums.size();
+
+        while(high>=low) {
+            mid = (low+high)/2;
+
+            if(nums[mid]>=target) {
+               ans = mid;
+               high = mid -1;
+            } else low = mid + 1;
+        }
+        
+        return ans;
     }
 };
