@@ -25,7 +25,7 @@ public:
 
         int low = INT_MAX, high=INT_MIN;
 
-        long long val = m * 1ll * k * 1ll;
+        long long val = m * 1ll * k;
         if (val > n) return -1;
 
         for (auto it:bloomDay) {
