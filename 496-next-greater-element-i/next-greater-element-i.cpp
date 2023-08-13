@@ -5,24 +5,17 @@ public:
         unordered_map<int, int> mp;
 
         for(int i=nums2.size()-1; i>=0; i--) {
-            if(!stck.empty() && nums2[i]<stck.top()) {
-                mp[nums2[i]] = stck.top();
-                stck.push(nums2[i]);
-            } else {
-                while(!stck.empty()) {
-                    if(nums2[i] > stck.top()) {
-                        stck.pop();
-                    } else if (nums2[i] < stck.top()) {
-                        mp[nums2[i]] = stck.top();
-                        stck.push(nums2[i]);
-                        break;
-                    }
-                }
-                if(stck.empty()) {
-                   mp[nums2[i]] = -1;
-                   stck.push(nums2[i]);
-                }
+            while(!stck.empty() && stck.top() <= nums2[i]) {
+                stck.pop();
             }
+
+            if(!stck.empty()) {
+               mp[nums2[i]] = stck.top();
+            } else {
+                mp[nums2[i]] = -1;
+            }
+           
+            stck.push(nums2[i]);
         }
         
         vector<int> ans;
