@@ -3,9 +3,9 @@ public:
     vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
         stack<int> stck;
         unordered_map<int, int> mp;
-        stck.push(-1);
+
         for(int i=nums2.size()-1; i>=0; i--) {
-            if(nums2[i]<stck.top()) {
+            if(!stck.empty() && nums2[i]<stck.top()) {
                 mp[nums2[i]] = stck.top();
                 stck.push(nums2[i]);
             } else {
