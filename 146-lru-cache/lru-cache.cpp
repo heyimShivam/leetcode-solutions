@@ -34,7 +34,7 @@ public:
         nextNode->prev = prevNode;
 
         mp.erase(key);
-        // free(del);
+        delete del;
     }
 
     void insert(int key, int value) {
@@ -45,13 +45,6 @@ public:
        newNode->prev = head;
        newNode->next->prev = newNode;
        mp[key] = newNode;
-        // Node* temp = head->next;
-        // Node* newNode = new Node(key, value);
-        // head->next = newNode;
-        // newNode->next = temp;
-        // temp->prev = newNode;
-        // newNode->prev = head;
-        // mp[key] = newNode;
     }
 
     int get(int key) {
