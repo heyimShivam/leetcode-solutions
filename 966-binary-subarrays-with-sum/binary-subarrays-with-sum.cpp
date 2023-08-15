@@ -1,18 +1,17 @@
 class Solution {
 public:
-    int numSubarraysWithSum(vector<int>& nums, int goal) {
-        return countSubArrs(nums,goal)-countSubArrs(nums,goal-1);
-    }
-    int countSubArrs(vector<int>&nums,int sum){
-        if(sum<0) return 0;
-        int preSum=0,j=0,count=0;
-        for(int i=0;i<nums.size();i++){
-            preSum+=nums[i];
-            while(preSum>sum){
-                preSum-=nums[j++];
-            }
-            count+=(i-j+1);
+    int helper(vector<int>& nums, int goal){
+        int n = nums.size(), count = 0, i = 0, j = 0, sum = 0;
+        while(j < n){
+            sum += nums[j];
+            while(i <= j && sum > goal)
+                sum -= nums[i++];
+            count += j - i + 1;
+            j++;
         }
         return count;
+    }
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        return helper(nums,goal) - helper(nums,goal - 1);
     }
 };
