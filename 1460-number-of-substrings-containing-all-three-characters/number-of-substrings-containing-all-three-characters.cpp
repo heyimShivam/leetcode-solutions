@@ -8,7 +8,7 @@ public:
             if(mp[s[j]] == 0) count++;
             mp[s[j]]++;
  
-            while(i<=j && count==3) {
+            while(count==3) {
                 mp[s[i]]--;
                 if(mp[s[i]] == 0) count--;
                 i++;
