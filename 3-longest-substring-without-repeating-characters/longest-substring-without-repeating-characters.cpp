@@ -10,14 +10,14 @@ public:
         while(j < s.size()) {
             if(st.find(s[j]) == st.end()) {
               st.insert(s[j]);
-              cout<<s[j];
+
+              maxLen = maxLen > st.size() ? maxLen : st.size();
+              
               j++;
             } else {
               st.erase(st.find(s[i]));
               i++;
             }
-
-          maxLen= maxLen > st.size() ? maxLen : st.size();
         }
 
         return maxLen;
