@@ -12,7 +12,7 @@ public:
                 mp[s[i]]--;
                 if(mp[s[i]] == 0) count--;
                 i++;
-                ans+=s.size() - j;
+                ans+=1 + (s.size() -1) - j;
             }
             
             j++;
