@@ -3,9 +3,11 @@ public:
     int maxScore(vector<int>& cardPoints, int k) {
         int totalSUM=0;
         int n = cardPoints.size();
+
         for(auto it:cardPoints){
            totalSUM +=it;
         }
+
         if(k == n) return totalSUM;
 
         int i=0, j=0;
