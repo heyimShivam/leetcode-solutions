@@ -1,27 +1,28 @@
 class Solution {
 public:
     int maximalNetworkRank(int n, vector<vector<int>>& roads) {
-        int maxRank=INT_MIN;
-        vector<int> adjList[n];
+        vector<int> rank_nodes(n, 0);
+        vector<vector<bool>> connection(n, vector<bool>(n, false));
 
         for(auto it : roads) {
-            adjList[it[0]].emplace_back(it[1]);
-            adjList[it[1]].emplace_back(it[0]);
+            connection[it[0]][it[1]] = true;
+            connection[it[1]][it[0]] = true;
+
+            rank_nodes[it[0]]++;
+            rank_nodes[it[1]]++;
         }
 
-        for(int i=0; i<n;i++){
-            for(int j=i+1; j<n; j++){
-                int rank_i = adjList[i].size();
-                int rank_j = adjList[j].size();
+        int max_rank;
 
-                int total_rank = rank_i + rank_j;
+        for(int i=0; i<n;i++) {
+            for(int j=i+1; j<n; j++) {
+                int total = rank_nodes[i] + rank_nodes[j];
+                if(connection[i][j]) total--;
 
-                if(find(adjList[i].begin(), adjList[i].end(), j) != adjList[i].end())    total_rank--;
-
-                maxRank = max(total_rank, maxRank);
+                max_rank = max(max_rank, total);
             }
         }
 
-        return maxRank;
+        return max_rank;
     }
 };
