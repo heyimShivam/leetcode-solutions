@@ -1,41 +1,29 @@
 class Solution {
 public:
-    int solve(vector<int> &nums, int index, int count, vector<vector<int>> &dp) {
-        if(index == nums.size()) return count;
+    int solve(vector<int>&nums, vector<vector<int>>&dp, int currIdx, int prevGroup)
+    {
+        if (currIdx == nums.size()) return 0;
+        if (dp[currIdx][prevGroup] != -1) 
+            return dp[currIdx][prevGroup];
+        
+        int currGroup = nums[currIdx];
+        int minOp = INT_MAX;
+        
+        for (int newGroup = prevGroup; newGroup <= 3; newGroup++)  {
+            int nextOp = solve(nums, dp, currIdx + 1, newGroup);
 
-        if(dp[index][count] != -1) return dp[index][count];
+            if (newGroup != currGroup) 
+                nextOp++;
 
-        int count1 = INT_MAX, cnt2= INT_MAX, cnt3= INT_MAX, simple = INT_MAX;
-
-        if(index == 0 || nums[index -1] <= nums[index]) {
-            simple = solve(nums, index + 1, count, dp);
+            minOp = min(minOp, nextOp);
         }
         
-        int temp = nums[index];
-
-        if(nums[index] != 1 && (index == 0 || nums[index-1] <=1 )) {
-            nums[index] = 1;
-            count1 = solve(nums, index + 1, count +1, dp);
-            nums[index] = temp;
-        }
-
-        if(nums[index] != 2 && (index == 0 || nums[index-1] <=2 )) {
-            cout<<"index is 1:";
-            nums[index] = 2;
-            cnt2 = solve(nums, index + 1, count +1, dp);
-            nums[index] = temp;
-        }
-
-        if(nums[index] != 3 && (index == 0 || nums[index-1] <=3 )) {
-            nums[index] = 3;
-            cnt3 = solve(nums, index + 1, count +1, dp);
-            nums[index] = temp;
-        }
-
-        return min(cnt3, min(cnt2, min(simple, count1)));
+        return dp[currIdx][prevGroup] = minOp;
     }
-    int minimumOperations(vector<int>& nums) {
-        vector<vector<int>> dp(nums.size(), vector<int>(nums.size(), -1));
-        return solve(nums, 0, 0, dp);
+    int minimumOperations(vector<int>& nums) 
+    {
+        vector<vector<int>>dp(nums.size(), vector<int>(4, -1));
+        int ans = solve(nums, dp, 0, 1);
+        return ans;
     }
 };
