@@ -8,10 +8,6 @@ public:
 
     int findLongestChain(vector<vector<int>>& pairs) {
         sort(pairs.begin(), pairs.end(), cpm);
-
-        for(auto it: pairs) {
-          cout<<it[0]<<"  "<<it[1]<<endl;
-        }
         
         int prev = 0, res = 1;
 
