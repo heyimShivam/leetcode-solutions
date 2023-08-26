@@ -1,19 +1,31 @@
 class Solution {
 public:
-    bool solve(vector<int>& nums, int index, vector<int> &dp) {
-      if(index == nums.size() -1) return true;
-
-      if(nums[index] == 0) return false;
-      if(dp[index] != -1) return dp[index];
-      
-      for(int i = 1; i<=nums[index]; i++) {
-        if(index + i <nums.size() && solve(nums, index + i, dp)) return dp[index] = true;
-      }
-
-      return dp[index] = false;
-    }
     bool canJump(vector<int>& nums) {
-      vector<int> dp(nums.size(), -1);
-      return solve(nums, 0, dp);
+        int n = nums.size();
+        vector<int> dp(n, -1);
+        dp[n-1] = 1; 
+        for(int idx = n-2; idx >= 0; idx--) {
+            if(nums[idx] == 0) {
+                dp[idx] = false;
+                continue;   
+            }
+            
+            int flag = 0;
+            int reach = idx + nums[idx];
+            for(int jump=idx + 1; jump <= reach; jump++) {
+                if(jump < nums.size() && dp[jump]) {
+                    dp[idx] = true;
+                    flag = 1;  
+                    break;
+                }
+            }
+            if(flag == 1) 
+                continue;
+           
+            dp[idx] = false;
+			
+        }
+        return dp[0]; 
     }
+
 };
