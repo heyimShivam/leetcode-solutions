@@ -3,21 +3,28 @@ public:
     int uniquePaths(int m, int n) {
       vector<vector<int>> dp (m, vector<int>(n, 0));
 
-      dp[m-1][n-1] = 1;
+      vector<int> dpI(n, 0);
+
+      dpI[n-1] = 1;
 
       for(int i=m-1; i>=0; i--) {
+        vector<int> dpI2(n, 0);
         for(int j=n-1; j>=0; j--) {
-          if(i == m-1 && j == n-1) continue;
+          if(i == m-1 && j == n-1) {
+            dpI2[n-1] = 1; 
+            continue;
+          }
           
           int wrap = 0;
 
-          if(i+1<m) wrap += dp[i+1][j];
-          if(j+1<n) wrap += dp[i][j+1];
+          if(i+1<m) wrap += dpI[j];
+          if(j+1<n) wrap += dpI2[j+1];
 
-          dp[i][j]  = wrap;
+          dpI2[j]  = wrap;
         }
+        dpI = dpI2;
       }
 
-      return dp[0][0];
+      return dpI[0];
     }
 };
