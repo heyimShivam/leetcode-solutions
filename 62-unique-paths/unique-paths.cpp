@@ -1,30 +1,23 @@
 class Solution {
 public:
+    int solve(int indexI,int indexJ, int m, int n, vector<vector<int>> &dp) {
+        if(indexI == m-1 && indexJ == n-1) return 1;
+
+        if(dp[indexI][indexJ] != -1) return dp[indexI][indexJ];
+
+        int ways = 0;
+        if(indexI+1 < m)
+          ways += solve(indexI+1, indexJ, m, n, dp);
+
+        if(indexJ+1 < n)
+          ways += solve(indexI, indexJ + 1, m, n, dp);
+
+        return dp[indexI][indexJ] = ways;
+    }
+
     int uniquePaths(int m, int n) {
-      vector<vector<int>> dp (m, vector<int>(n, 0));
+        vector<vector<int>> dp (m, vector<int>(n, -1));
 
-      vector<int> dpI(n, 0);
-
-      dpI[n-1] = 1;
-
-      for(int i=m-1; i>=0; i--) {
-        vector<int> dpI2(n, 0);
-        for(int j=n-1; j>=0; j--) {
-          if(i == m-1 && j == n-1) {
-            dpI2[n-1] = 1; 
-            continue;
-          }
-          
-          int wrap = 0;
-
-          if(i+1<m) wrap += dpI[j];
-          if(j+1<n) wrap += dpI2[j+1];
-
-          dpI2[j]  = wrap;
-        }
-        dpI = dpI2;
-      }
-
-      return dpI[0];
+        return solve(0, 0, m, n, dp);
     }
 };
