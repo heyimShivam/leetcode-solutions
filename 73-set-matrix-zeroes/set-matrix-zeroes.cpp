@@ -4,25 +4,23 @@ public:
         int m = matrix.size();
         int n = matrix[0].size();
 
-        vector<pair<int, int>> zeroPos;
+        set<int> v1, v2;
 
         for(int i = 0; i < m; i++) {
-            for(int j=0; j<n; j++) {
+            for(int j=0; j < n; j++) {
               if(matrix[i][j] == 0){
-                  zeroPos.push_back({i, j});
+                  v1.insert(i);
+                  v2.insert(j);
               }
             }
         }
 
-        for(auto it : zeroPos) {
-            for(int i=0; i<n; i++) {
-                matrix[it.first][i] = 0;
-            }
-        }
 
-        for(auto it : zeroPos) {
-            for(int i=0; i<m; i++) {
-                matrix[i][it.second] = 0;
+        for(int i = 0; i < m; i++) {
+            for(int j=0; j < n; j++) {
+              if(v1.count(i) || v2.count(j)){
+                matrix[i][j] = 0;
+              }
             }
         }
     }
